@@ -33,3 +33,8 @@ target 'UnitTests' do
   pod 'Expecta'
   pod 'OCMock'
 end
+
+
+target 'Atlas' do
+  pod 'LayerKit', '~> 0.15.0'
+end
