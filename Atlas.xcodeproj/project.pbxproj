@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2B6445637A4A449ABC5750C4 /* libPods-StoryboardTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFFB13F66B57103A728CA624 /* libPods-StoryboardTests.a */; };
 		377EEF73853F61FE5B5568A2 /* libPods-Storyboard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12E6C660682C89FC093228B5 /* libPods-Storyboard.a */; };
-		53E7FED9E6B9F4F2855BEF10 /* libPods-Atlas-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CFBFE5500CE8EDFC9402DA8C /* libPods-Atlas-iOS.a */; };
 		5AF32FD31AA59C39005C13D7 /* ATLUserMockTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF32FD21AA59C39005C13D7 /* ATLUserMockTest.m */; };
 		C314793A1B75792000706BD0 /* Atlas.m in Sources */ = {isa = PBXBuildFile; fileRef = C31479391B75792000706BD0 /* Atlas.m */; };
 		C31479471B75792700706BD0 /* ATLAddressBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C314793C1B75792700706BD0 /* ATLAddressBarViewController.m */; };
@@ -229,12 +228,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		01CC818DB9C023BB1D94558F /* Pods-Atlas-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Atlas-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Atlas-iOS/Pods-Atlas-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		036D01264618BE1AC6D4154A /* Pods-ProgrammaticTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProgrammaticTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProgrammaticTests/Pods-ProgrammaticTests.debug.xcconfig"; sourceTree = "<group>"; };
-		04767B09A9794C591D6A2D48 /* Pods-Atlas.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Atlas.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Atlas/Pods-Atlas.debug.xcconfig"; sourceTree = "<group>"; };
 		05B8098B39EFDBF4DF6E2BC0 /* libPods-Programmatic.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Programmatic.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		12E6C660682C89FC093228B5 /* libPods-Storyboard.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Storyboard.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		15E7B4DD8972A1B107DFF166 /* Pods-StoryboardTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoryboardTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-StoryboardTests/Pods-StoryboardTests.release.xcconfig"; sourceTree = "<group>"; };
-		1B16468A73BF634AF2BC7747 /* Pods-Atlas.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Atlas.release.xcconfig"; path = "Pods/Target Support Files/Pods-Atlas/Pods-Atlas.release.xcconfig"; sourceTree = "<group>"; };
 		1D0C5311DA4B7E9E91DCA6F4 /* libPods-LayerUIKit Storyboard.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LayerUIKit Storyboard.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E25E423862E254994407AA1 /* Pods-StoryboardTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoryboardTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StoryboardTests/Pods-StoryboardTests.debug.xcconfig"; sourceTree = "<group>"; };
 		1F88B2BB7AACF5DFC943592C /* Pods-Unit Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unit Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Unit Tests/Pods-Unit Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -248,6 +246,7 @@
 		5AF32FD21AA59C39005C13D7 /* ATLUserMockTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLUserMockTest.m; sourceTree = "<group>"; };
 		5C9A8B1181386C002F1F0585 /* Pods-Conversation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Conversation.release.xcconfig"; path = "Pods/Target Support Files/Pods-Conversation/Pods-Conversation.release.xcconfig"; sourceTree = "<group>"; };
 		6334472F1BD9D5C3E110141E /* Pods-UnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.debug.xcconfig"; sourceTree = "<group>"; };
+		84CC9C5241E42AA1210AFCF7 /* Pods-Atlas-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Atlas-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Atlas-iOS/Pods-Atlas-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		866487157645D4273D55AEF8 /* Pods-ProgrammaticTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProgrammaticTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProgrammaticTests/Pods-ProgrammaticTests.release.xcconfig"; sourceTree = "<group>"; };
 		9337BCDD41DBBADF3D4BBD19 /* Pods-Conversation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Conversation.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Conversation/Pods-Conversation.debug.xcconfig"; sourceTree = "<group>"; };
 		C16C4DB7F78BFA3144C11654 /* Pods-UnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -407,7 +406,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				53E7FED9E6B9F4F2855BEF10 /* libPods-Atlas-iOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,8 +488,8 @@
 				15E7B4DD8972A1B107DFF166 /* Pods-StoryboardTests.release.xcconfig */,
 				6334472F1BD9D5C3E110141E /* Pods-UnitTests.debug.xcconfig */,
 				C16C4DB7F78BFA3144C11654 /* Pods-UnitTests.release.xcconfig */,
-				04767B09A9794C591D6A2D48 /* Pods-Atlas.debug.xcconfig */,
-				1B16468A73BF634AF2BC7747 /* Pods-Atlas.release.xcconfig */,
+				01CC818DB9C023BB1D94558F /* Pods-Atlas-iOS.debug.xcconfig */,
+				84CC9C5241E42AA1210AFCF7 /* Pods-Atlas-iOS.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1353,7 +1351,7 @@
 /* Begin XCBuildConfiguration section */
 		C3A65C2B1B7176050023DAD3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 04767B09A9794C591D6A2D48 /* Pods-Atlas.debug.xcconfig */;
+			baseConfigurationReference = 01CC818DB9C023BB1D94558F /* Pods-Atlas-iOS.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1395,7 +1393,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1404,7 +1402,7 @@
 		};
 		C3A65C2C1B7176050023DAD3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1B16468A73BF634AF2BC7747 /* Pods-Atlas.release.xcconfig */;
+			baseConfigurationReference = 84CC9C5241E42AA1210AFCF7 /* Pods-Atlas-iOS.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
