@@ -36,5 +36,5 @@ end
 
 
 target 'Atlas-iOS' do
-  pod 'LayerKit' #, '~> 0.15.0'
+  pod 'LayerKit', '~> 0.15.0'
 end
