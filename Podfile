@@ -35,6 +35,6 @@ target 'UnitTests' do
 end
 
 
-target 'Atlas' do
-  pod 'LayerKit', '~> 0.15.0'
+target 'Atlas-iOS' do
+  pod 'LayerKit' #, '~> 0.15.0'
 end

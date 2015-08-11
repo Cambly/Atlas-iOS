@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2B6445637A4A449ABC5750C4 /* libPods-StoryboardTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFFB13F66B57103A728CA624 /* libPods-StoryboardTests.a */; };
 		377EEF73853F61FE5B5568A2 /* libPods-Storyboard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12E6C660682C89FC093228B5 /* libPods-Storyboard.a */; };
+		53E7FED9E6B9F4F2855BEF10 /* libPods-Atlas-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CFBFE5500CE8EDFC9402DA8C /* libPods-Atlas-iOS.a */; };
 		5AF32FD31AA59C39005C13D7 /* ATLUserMockTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF32FD21AA59C39005C13D7 /* ATLUserMockTest.m */; };
 		C314793A1B75792000706BD0 /* Atlas.m in Sources */ = {isa = PBXBuildFile; fileRef = C31479391B75792000706BD0 /* Atlas.m */; };
 		C31479471B75792700706BD0 /* ATLAddressBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C314793C1B75792700706BD0 /* ATLAddressBarViewController.m */; };
@@ -329,7 +330,8 @@
 		C31479951B75794F00706BD0 /* ATLProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATLProgressView.m; path = Code/Views/ATLProgressView.m; sourceTree = "<group>"; };
 		C31479A91B757A3E00706BD0 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "/Users/garhiggins/cambly/Cambly-iOS/Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<absolute>"; };
 		C31479D61B757DA600706BD0 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "/Users/garhiggins/cambly/Cambly-iOS/Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<absolute>"; };
-		C3A65C1A1B7176040023DAD3 /* libAtlas.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAtlas.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3A65C1A1B7176040023DAD3 /* libAtlas-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libAtlas-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CFBFE5500CE8EDFC9402DA8C /* libPods-Atlas-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Atlas-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0294DD81A93F33900702856 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0294DE41A93F37000702856 /* ATLMediaStreamTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATLMediaStreamTests.m; path = Tests/ATLMediaStreamTests.m; sourceTree = "<group>"; };
 		D0294DE61A93F37A00702856 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Tests/Info.plist; sourceTree = "<group>"; };
@@ -405,6 +407,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53E7FED9E6B9F4F2855BEF10 /* libPods-Atlas-iOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,6 +468,7 @@
 				DFFB13F66B57103A728CA624 /* libPods-StoryboardTests.a */,
 				F7012754989ED85BE6A8D69E /* libPods-UnitTests.a */,
 				3265533DD30E0A5104330F6F /* libPods-Atlas.a */,
+				CFBFE5500CE8EDFC9402DA8C /* libPods-Atlas-iOS.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -608,7 +612,7 @@
 				D6F57E541A8BE4B500B62BD9 /* Storyboard.app */,
 				D6F57E6C1A8BE4B500B62BD9 /* StoryboardTests.xctest */,
 				D0294DD81A93F33900702856 /* UnitTests.xctest */,
-				C3A65C1A1B7176040023DAD3 /* libAtlas.a */,
+				C3A65C1A1B7176040023DAD3 /* libAtlas-iOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -777,9 +781,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C3A65C191B7176040023DAD3 /* Atlas */ = {
+		C3A65C191B7176040023DAD3 /* Atlas-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C3A65C2F1B7176050023DAD3 /* Build configuration list for PBXNativeTarget "Atlas" */;
+			buildConfigurationList = C3A65C2F1B7176050023DAD3 /* Build configuration list for PBXNativeTarget "Atlas-iOS" */;
 			buildPhases = (
 				165147BD4EE6ADE90F4210C7 /* Check Pods Manifest.lock */,
 				C3A65C161B7176040023DAD3 /* Sources */,
@@ -791,9 +795,9 @@
 			);
 			dependencies = (
 			);
-			name = Atlas;
+			name = "Atlas-iOS";
 			productName = Atlas;
-			productReference = C3A65C1A1B7176040023DAD3 /* libAtlas.a */;
+			productReference = C3A65C1A1B7176040023DAD3 /* libAtlas-iOS.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		D0294DD71A93F33900702856 /* UnitTests */ = {
@@ -943,7 +947,7 @@
 				D6F57E531A8BE4B500B62BD9 /* Storyboard */,
 				D6F57E6B1A8BE4B500B62BD9 /* StoryboardTests */,
 				D0294DD71A93F33900702856 /* UnitTests */,
-				C3A65C191B7176040023DAD3 /* Atlas */,
+				C3A65C191B7176040023DAD3 /* Atlas-iOS */,
 			);
 		};
 /* End PBXProject section */
@@ -1094,7 +1098,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Atlas/Pods-Atlas-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Atlas-iOS/Pods-Atlas-iOS-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		88FEFE0196AD927F8CA10C33 /* Copy Pods Resources */ = {
@@ -1367,6 +1371,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = "$(inherited)";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1417,7 +1422,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_NS_ASSERTIONS = "$(inherited)";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1433,7 +1438,7 @@
 					"/Users/garhiggins/cambly/Cambly-iOS/Pods/../build/Debug-iphoneos",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1912,7 +1917,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C3A65C2F1B7176050023DAD3 /* Build configuration list for PBXNativeTarget "Atlas" */ = {
+		C3A65C2F1B7176050023DAD3 /* Build configuration list for PBXNativeTarget "Atlas-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C3A65C2B1B7176050023DAD3 /* Debug */,
