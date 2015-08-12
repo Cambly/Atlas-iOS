@@ -112,7 +112,17 @@ CGFloat const ATLAvatarImageTailPadding = 7.0f;
 - (void)presentMessage:(LYRMessage *)message
 {
     self.message = message;
+    
+    // Cambly Specific handling
+    for (LYRMessagePart *messagePart in message.parts) {
+        if ([messagePart.MIMEType isEqualToString:ICMIMETypeJson]) {
+            [self configureBubbleViewForCamblyProprietaryContent];
+            return;
+        }
+    }
+    
     LYRMessagePart *messagePart = message.parts.firstObject;
+    
     
     if ([self messageContainsTextContent]) {
         [self configureBubbleViewForTextContent];
@@ -125,6 +135,33 @@ CGFloat const ATLAvatarImageTailPadding = 7.0f;
     } else if ([messagePart.MIMEType isEqualToString:ATLMIMETypeLocation]) {
         [self configureBubbleViewForLocationContent];
     }
+}
+
+- (void)configureBubbleViewForCamblyProprietaryContent {
+    NSMutableArray *textBlocks = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [self.message.parts count]; i++) {
+        LYRMessagePart *messagePart = self.message.parts[i];
+        if ([messagePart.MIMEType isEqualToString:ATLMIMETypeTextPlain]) {
+            [textBlocks addObject:[[NSString alloc] initWithData:messagePart.data encoding:NSUTF8StringEncoding]];
+        } else if ([messagePart.MIMEType isEqualToString:ICMIMETypeJson]) {
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:messagePart.data options:NSJSONReadingMutableContainers error:nil];
+            NSString *type = [json objectForKey:@"type"];
+            NSInteger parts = [[json objectForKey:@"parts"] intValue];
+            if ([type isEqualToString:@"attachment"]) {
+                NSDictionary *metadata = [json objectForKey:@"metadata"];
+                NSString *filename = [metadata objectForKey:@"filename"];
+                [textBlocks addObject:filename];
+            } else {
+                [textBlocks addObject:@"Unparseable Message - Upgrade Cambly to view this message"];
+            }
+            i += parts - 1; // Chomp additional message parts
+        } else {
+            [textBlocks addObject:@"Unparseable Message - Upgrade Cambly to view this message"];
+        }
+    }
+    NSString *text = [textBlocks componentsJoinedByString:@"\n"];
+    [self.bubbleView updateWithAttributedText:[self attributedStringForText:text]];
+    [self.bubbleView updateProgressIndicatorWithProgress:0.0 visible:NO animated:NO];
 }
 
 - (void)configureBubbleViewForTextContent
