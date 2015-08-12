@@ -112,19 +112,11 @@ CGFloat const ATLAvatarImageTailPadding = 7.0f;
 - (void)presentMessage:(LYRMessage *)message
 {
     self.message = message;
-    
-    // Cambly Specific handling
-    for (LYRMessagePart *messagePart in message.parts) {
-        if ([messagePart.MIMEType isEqualToString:ICMIMETypeJson]) {
-            [self configureBubbleViewForCamblyProprietaryContent];
-            return;
-        }
-    }
-    
     LYRMessagePart *messagePart = message.parts.firstObject;
     
-    
-    if ([self messageContainsTextContent]) {
+    if ([ATLMessageCollectionViewCell isCamblyProprietaryMessage:message]) {
+        [self configureBubbleViewForCamblyProprietaryContent];
+    } else if ([self messageContainsTextContent]) {
         [self configureBubbleViewForTextContent];
     } else if ([messagePart.MIMEType isEqualToString:ATLMIMETypeImageJPEG]) {
         [self configureBubbleViewForImageContent];
@@ -137,10 +129,11 @@ CGFloat const ATLAvatarImageTailPadding = 7.0f;
     }
 }
 
-- (void)configureBubbleViewForCamblyProprietaryContent {
++ (NSString *)getCamblyAttachmentText:(LYRMessage *)message
+{
     NSMutableArray *textBlocks = [[NSMutableArray alloc] init];
-    for (int i = 0; i < [self.message.parts count]; i++) {
-        LYRMessagePart *messagePart = self.message.parts[i];
+    for (int i = 0; i < [message.parts count]; i++) {
+        LYRMessagePart *messagePart = message.parts[i];
         if ([messagePart.MIMEType isEqualToString:ATLMIMETypeTextPlain]) {
             [textBlocks addObject:[[NSString alloc] initWithData:messagePart.data encoding:NSUTF8StringEncoding]];
         } else if ([messagePart.MIMEType isEqualToString:ICMIMETypeJson]) {
@@ -159,7 +152,11 @@ CGFloat const ATLAvatarImageTailPadding = 7.0f;
             [textBlocks addObject:@"Unparseable Message - Upgrade Cambly to view this message"];
         }
     }
-    NSString *text = [textBlocks componentsJoinedByString:@"\n"];
+    return [textBlocks componentsJoinedByString:@"\n"];
+}
+
+- (void)configureBubbleViewForCamblyProprietaryContent {
+    NSString *text = [ATLMessageCollectionViewCell getCamblyAttachmentText:self.message];
     [self.bubbleView updateWithAttributedText:[self attributedStringForText:text]];
     [self.bubbleView updateProgressIndicatorWithProgress:0.0 visible:NO animated:NO];
 }
@@ -323,22 +320,31 @@ CGFloat const ATLAvatarImageTailPadding = 7.0f;
     [self.bubbleView updateProgressIndicatorWithProgress:0.0 visible:NO animated:NO];
 }
 
+- (void)configureTextBasedBubbleView
+{
+    if ([ATLMessageCollectionViewCell isCamblyProprietaryMessage:self.message]) {
+        [self configureBubbleViewForCamblyProprietaryContent];
+    } else if ([self messageContainsTextContent]) {
+        [self configureBubbleViewForTextContent];
+    }
+}
+
 - (void)setMessageTextFont:(UIFont *)messageTextFont
 {
     _messageTextFont = messageTextFont;
-    if ([self messageContainsTextContent]) [self configureBubbleViewForTextContent];
+    [self configureTextBasedBubbleView];
 }
 
 - (void)setMessageTextColor:(UIColor *)messageTextColor
 {
     _messageTextColor = messageTextColor;
-    if ([self messageContainsTextContent]) [self configureBubbleViewForTextContent];
+    [self configureTextBasedBubbleView];
 }
 
 - (void)setMessageLinkTextColor:(UIColor *)messageLinkTextColor
 {
     _messageLinkTextColor = messageLinkTextColor;
-    if ([self messageContainsTextContent]) [self configureBubbleViewForTextContent];
+    [self configureTextBasedBubbleView];
 }
 
 - (void)setMessageTextCheckingTypes:(NSTextCheckingType)messageLinkTypes
@@ -394,6 +400,18 @@ CGFloat const ATLAvatarImageTailPadding = 7.0f;
     return attributedString;
 }
 
+
++ (BOOL)isCamblyProprietaryMessage:(LYRMessage *)message
+{
+    // Cambly Specific handling
+    for (LYRMessagePart *messagePart in message.parts) {
+        if ([messagePart.MIMEType isEqualToString:ICMIMETypeJson]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 - (BOOL)messageContainsTextContent
 {
     LYRMessagePart *messagePart = self.message.parts.firstObject;
@@ -441,7 +459,10 @@ CGFloat const ATLAvatarImageTailPadding = 7.0f;
     LYRMessagePart *part = message.parts.firstObject;
 
     CGFloat height = 0;
-    if ([part.MIMEType isEqualToString:ATLMIMETypeTextPlain]) {
+    if ([ATLMessageCollectionViewCell isCamblyProprietaryMessage:message]) {
+        NSString *text = [ATLMessageCollectionViewCell getCamblyAttachmentText:message];
+        height = [self cellHeightForText:text inView:view];
+    } else if ([part.MIMEType isEqualToString:ATLMIMETypeTextPlain]) {
         height = [self cellHeightForTextMessage:message inView:view];
     } else if ([part.MIMEType isEqualToString:ATLMIMETypeImageJPEG] || [part.MIMEType isEqualToString:ATLMIMETypeImagePNG] || [part.MIMEType isEqualToString:ATLMIMETypeImageGIF]) {
         height = [self cellHeightForImageMessage:message];
@@ -455,13 +476,18 @@ CGFloat const ATLAvatarImageTailPadding = 7.0f;
 
 + (CGFloat)cellHeightForTextMessage:(LYRMessage *)message inView:(id)view
 {
+    LYRMessagePart *part = message.parts.firstObject;
+    NSString *text = [[NSString alloc] initWithData:part.data encoding:NSUTF8StringEncoding];
+    return [self cellHeightForText:text inView:view];
+}
+
++ (CGFloat)cellHeightForText:(NSString *)text inView:(id)view
+{
     // Temporarily adding  the view to the hierarchy so that UIAppearance property values will be set based on containment.
     ATLMessageCollectionViewCell *cell = [self sharedCell];
     [view addSubview:cell];
     [cell removeFromSuperview];
     
-    LYRMessagePart *part = message.parts.firstObject;
-    NSString *text = [[NSString alloc] initWithData:part.data encoding:NSUTF8StringEncoding];
     UIFont *font = [[[self class] appearance] messageTextFont];
     if (!font) {
         font = cell.messageTextFont;
