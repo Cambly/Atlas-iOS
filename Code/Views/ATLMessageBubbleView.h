@@ -21,6 +21,8 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "ATLProgressView.h"
+#import "ATLAttachmentView.h"
+#import <LayerKit/LayerKit.h>
 
 extern CGFloat const ATLMessageBubbleLabelVerticalPadding;
 extern CGFloat const ATLMessageBubbleLabelHorizontalPadding;
@@ -50,6 +52,11 @@ extern NSString *const ATLUserDidTapPhoneNumberNotification;
  @abstract Tells the bubble view to display a given string.
  */
 - (void)updateWithAttributedText:(NSAttributedString *)text;
+
+/**
+ @abstract Tells the bubble view to display the text, and when clicked, download & open the attachment
+ */
+- (void)updateWithAttachments:(NSDictionary *)attachments;
 
 /**
  @abstract Tells the bubble view to display a given image.
@@ -90,5 +97,7 @@ extern NSString *const ATLUserDidTapPhoneNumberNotification;
  @default NSTextCheckingTypeLink
  */
 @property (nonatomic) NSTextCheckingType textCheckingTypes;
+
+@property (nonatomic) id<ATLAttachmentViewDelegate> attachmentViewDelegate;
 
 @end

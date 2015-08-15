@@ -20,6 +20,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ATLMessagePresenting.h"
+#import "ATLAttachmentView.h"
 #import "ATLMessageBubbleView.h"
 #import "ATLConstants.h"
 #import "ATLAvatarImageView.h"
@@ -79,6 +80,8 @@ extern CGFloat const ATLAvatarImageTailPadding;
  @abstract The optional avatar image view representing a user.
  */
 @property (nonatomic) ATLAvatarImageView *avatarImageView;
+
+@property (nonatomic) id<ATLAttachmentViewDelegate> attachmentViewDelegate;
 
 /**
  @abstract Performs calculations to determine a cell's height.

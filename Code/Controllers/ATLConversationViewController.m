@@ -30,7 +30,7 @@
 #import "ATLMediaAttachment.h"
 #import "ATLLocationManager.h"
 
-@interface ATLConversationViewController () <UICollectionViewDataSource, UICollectionViewDelegate, ATLMessageInputToolbarDelegate, UIActionSheetDelegate, CLLocationManagerDelegate>
+@interface ATLConversationViewController () <UICollectionViewDataSource, UICollectionViewDelegate, ATLMessageInputToolbarDelegate, ATLAttachmentViewDelegate, UIActionSheetDelegate, CLLocationManagerDelegate, UIDocumentInteractionControllerDelegate>
 
 @property (nonatomic) ATLConversationDataSource *conversationDataSource;
 @property (nonatomic, readwrite) LYRQueryController *queryController;
@@ -119,10 +119,12 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 {
     [super loadView];
     // Collection View Setup
-    self.collectionView = [[ATLConversationCollectionView alloc] initWithFrame:CGRectZero
-                                                          collectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
-    self.collectionView.delegate = self;
-    self.collectionView.dataSource = self;
+    ATLConversationCollectionView *conversationCollectionView = [[ATLConversationCollectionView alloc] initWithFrame:CGRectZero
+                                                                                               collectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+    conversationCollectionView.delegate = self;
+    conversationCollectionView.attachmentViewDelegate = self;
+    conversationCollectionView.dataSource = self;
+    self.collectionView = conversationCollectionView;
 }
 
 - (void)setLayerClient:(LYRClient *)layerClient
@@ -420,6 +422,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     } else {
         [cell updateWithSender:nil];
     }
+    [cell updateWithAttachmentViewDelegate:self];
     if (message.isUnread && [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
         [message markAsRead:nil];
     }
@@ -586,6 +589,31 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     if (!self.conversation) return;
     [self.conversation sendTypingIndicator:LYRTypingDidFinish];
 }
+
+#pragma mark - ATLAttachmentViewDelegate
+
+- (void)openAttachment:(LYRMessagePart *)attachment filename:(NSString *)filename
+{
+    NSString* tempPath = NSTemporaryDirectory();
+    NSString* filePath = [tempPath stringByAppendingPathComponent:filename];
+    [attachment.data writeToFile:filePath atomically:YES];
+    NSURL* fileUrl = [NSURL fileURLWithPath:filePath];
+    UIDocumentInteractionController *interactionController =
+        [UIDocumentInteractionController interactionControllerWithURL: fileUrl];
+    interactionController.delegate = self;
+    // TODO(gar): maybe the attachment view should provide the rect?
+//    [interactionController presentOpenInMenuFromRect:self.view.frame inView:self.view animated:YES];
+    [interactionController presentPreviewAnimated:YES];
+    
+}
+
+#pragma mark - UIDocumentInteractionControllerDelegate
+
+- (UIViewController *) documentInteractionControllerViewControllerForPreview:(UIDocumentInteractionController *)controller
+{
+    return self;
+}
+
 
 #pragma mark - Message Sending
 

@@ -18,6 +18,7 @@
 //  limitations under the License.
 //
 
+#import "ATLAttachmentView.h"
 #import "ATLMessageBubbleView.h"
 #import "ATLMessagingUtilities.h"
 
@@ -32,6 +33,7 @@ NSString *const ATLUserDidTapLinkNotification = @"ATLUserDidTapLinkNotification"
 NSString *const ATLUserDidTapPhoneNumberNotification = @"ATLUserDidTapPhoneNumberNotification";
 
 typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
+    ATLBubbleViewContentTypeAttachment,
     ATLBubbleViewContentTypeText,
     ATLBubbleViewContentTypeImage,
     ATLBubbleViewContentTypeLocation,
@@ -48,6 +50,7 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
 @property (nonatomic) NSLayoutConstraint *imageWidthConstraint;
 @property (nonatomic) MKMapSnapshotter *snapshotter;
 @property (nonatomic) ATLProgressView *progressView;
+@property (nonatomic) NSMutableArray *attachmentViews;
 
 @end
 
@@ -68,7 +71,7 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
     self = [super initWithFrame:frame];
     if (self) {
         _locationShown = kCLLocationCoordinate2DInvalid;
-        self.clipsToBounds = YES;
+        self.clipsToBounds = NO;
 
         _bubbleViewLabel = [[UILabel alloc] init];
         _bubbleViewLabel.numberOfLines = 0;
@@ -88,6 +91,8 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
         _progressView.translatesAutoresizingMaskIntoConstraints = NO;
         _progressView.alpha = 1.0f;
         [self addSubview:_progressView];
+        
+        self.attachmentViews = [[NSMutableArray alloc] init];
 
         [self configureBubbleViewLabelConstraints];
         [self configureBubbleImageViewConstraints];
@@ -118,6 +123,10 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
     self.bubbleImageView.image = nil;
     [self applyImageWidthConstraint:NO];
     [self setBubbleViewContentType:ATLBubbleViewContentTypeText];
+    for (UIView *attachmentView in self.attachmentViews) {
+        [attachmentView removeFromSuperview];
+    }
+    [self.attachmentViews removeAllObjects];
 }
 
 - (void)updateWithAttributedText:(NSAttributedString *)text
@@ -125,6 +134,25 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
     self.bubbleViewLabel.attributedText = text;
     [self applyImageWidthConstraint:NO];
     [self setBubbleViewContentType:ATLBubbleViewContentTypeText];
+}
+
+- (void)updateWithAttachments:(NSDictionary *)attachments
+{
+    for (UIView *attachmentView in self.attachmentViews) {
+        [attachmentView removeFromSuperview];
+    }
+    [self.attachmentViews removeAllObjects];
+    for (NSString *filename in attachments) {
+        ATLAttachmentView *attachmentView = [[ATLAttachmentView alloc] init];
+        attachmentView.delegate = self.attachmentViewDelegate;
+        attachmentView.translatesAutoresizingMaskIntoConstraints = NO;
+        [attachmentView updateWithAttachment:[attachments objectForKey:filename] withName:filename];
+        [self.attachmentViews addObject:attachmentView];
+        [self addSubview:attachmentView];
+        [self configureLastAttachmentViewConstraints];
+    }
+    [self setBubbleViewContentType:ATLBubbleViewContentTypeAttachment];
+    [self setNeedsLayout];
 }
 
 - (void)updateWithImage:(UIImage *)image width:(CGFloat)width
@@ -187,6 +215,7 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
     _contentType = contentType;
     switch (contentType) {
         case ATLBubbleViewContentTypeText:
+        case ATLBubbleViewContentTypeAttachment:
             self.bubbleImageView.hidden = YES;
             self.bubbleViewLabel.hidden = NO;
             self.bubbleImageView.image = nil;
@@ -382,7 +411,7 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_bubbleViewLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:ATLMessageBubbleLabelVerticalPadding]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_bubbleViewLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:ATLMessageBubbleLabelHorizontalPadding]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_bubbleViewLabel attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0 constant:-ATLMessageBubbleLabelHorizontalPadding]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:_bubbleViewLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-ATLMessageBubbleLabelVerticalPadding]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:_bubbleViewLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationLessThanOrEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-ATLMessageBubbleLabelVerticalPadding]];
 }
 
 - (void)configureBubbleImageViewConstraints
@@ -401,6 +430,18 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_progressView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_progressView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:64.0f]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_progressView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:64.0f]];
+}
+
+// Configures the Constraints for the last AttachemntView in self.attachmentViews
+- (void)configureLastAttachmentViewConstraints
+{
+    UIView *attachmentView = self.attachmentViews[[self.attachmentViews count] - 1]; // Configure the last view
+    UIView *aboveView = ([self.attachmentViews count] == 1) ? _bubbleViewLabel : self.attachmentViews[[self.attachmentViews count] - 2];
+
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:attachmentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:aboveView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:ATLMessageBubbleAttachmentVerticalMargin]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:attachmentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:ATLMessageBubbleLabelHorizontalPadding]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:attachmentView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0 constant:-ATLMessageBubbleLabelHorizontalPadding]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:attachmentView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-ATLMessageBubbleLabelVerticalPadding]];
 }
 
 @end

@@ -20,6 +20,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ATLParticipant.h"
+#import "ATLAttachmentView.h"
 #import <LayerKit/LayerKit.h>
 
 /**
@@ -42,5 +43,10 @@
  @abstract A boolean to determine whether or not the receiver should display an avatar item.
  */
 - (void)shouldDisplayAvatarItem:(BOOL)shouldDisplayAvatarItem;
+
+/**
+ @abstract A suspicious method to pass an Attachment View Delegate down to AttachmentView cells.
+ */
+- (void)updateWithAttachmentViewDelegate:(id<ATLAttachmentViewDelegate>) delegate;
 
 @end

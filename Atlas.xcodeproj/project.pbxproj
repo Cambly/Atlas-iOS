@@ -87,6 +87,8 @@
 		C31479D31B757CF300706BD0 /* ATLParticipantTableViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C31479431B75792700706BD0 /* ATLParticipantTableViewController.h */; };
 		C31479D41B757CF300706BD0 /* ATLTypingIndicatorViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C31479451B75792700706BD0 /* ATLTypingIndicatorViewController.h */; };
 		C31479D51B757CF300706BD0 /* Atlas.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C31479381B75791700706BD0 /* Atlas.h */; };
+		C3D07DC81B7C13D900468344 /* ATLAttachmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D07DC61B7C13D900468344 /* ATLAttachmentView.m */; };
+		C3D07DC91B7E9CAA00468344 /* ATLAttachmentView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C3D07DC51B7C13D900468344 /* ATLAttachmentView.h */; };
 		CE7BDC080170509511B89900 /* libPods-UnitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F7012754989ED85BE6A8D69E /* libPods-UnitTests.a */; };
 		D0294DE71A93F37A00702856 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0294DE61A93F37A00702856 /* Info.plist */; };
 		D0294DE81A93F39300702856 /* ATLMediaStreamTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0294DE41A93F37000702856 /* ATLMediaStreamTests.m */; };
@@ -181,6 +183,7 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				C3D07DC91B7E9CAA00468344 /* ATLAttachmentView.h in CopyFiles */,
 				C31479AE1B757CF300706BD0 /* ATLAvatarItem.h in CopyFiles */,
 				C31479AF1B757CF300706BD0 /* ATLConversationPresenting.h in CopyFiles */,
 				C31479B01B757CF300706BD0 /* ATLMessagePresenting.h in CopyFiles */,
@@ -330,6 +333,8 @@
 		C31479A91B757A3E00706BD0 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "/Users/garhiggins/cambly/Cambly-iOS/Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<absolute>"; };
 		C31479D61B757DA600706BD0 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "/Users/garhiggins/cambly/Cambly-iOS/Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<absolute>"; };
 		C3A65C1A1B7176040023DAD3 /* libAtlas-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libAtlas-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3D07DC51B7C13D900468344 /* ATLAttachmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATLAttachmentView.h; path = Code/Views/ATLAttachmentView.h; sourceTree = "<group>"; };
+		C3D07DC61B7C13D900468344 /* ATLAttachmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATLAttachmentView.m; path = Code/Views/ATLAttachmentView.m; sourceTree = "<group>"; };
 		CFBFE5500CE8EDFC9402DA8C /* libPods-Atlas-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Atlas-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0294DD81A93F33900702856 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0294DE41A93F37000702856 /* ATLMediaStreamTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATLMediaStreamTests.m; path = Tests/ATLMediaStreamTests.m; sourceTree = "<group>"; };
@@ -555,6 +560,8 @@
 				C31479861B75794F00706BD0 /* ATLMessageBubbleView.h */,
 				C31479871B75794F00706BD0 /* ATLMessageBubbleView.m */,
 				C31479881B75794F00706BD0 /* ATLMessageCollectionViewCell.h */,
+				C3D07DC51B7C13D900468344 /* ATLAttachmentView.h */,
+				C3D07DC61B7C13D900468344 /* ATLAttachmentView.m */,
 				C31479891B75794F00706BD0 /* ATLMessageCollectionViewCell.m */,
 				C314798A1B75794F00706BD0 /* ATLMessageComposeTextView.h */,
 				C314798B1B75794F00706BD0 /* ATLMessageComposeTextView.m */,
@@ -1181,6 +1188,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3D07DC81B7C13D900468344 /* ATLAttachmentView.m in Sources */,
 				C314796D1B75794300706BD0 /* ATLMediaInputStream.m in Sources */,
 				C314799A1B75794F00706BD0 /* ATLConversationCollectionView.m in Sources */,
 				C314799E1B75794F00706BD0 /* ATLConversationTableViewCell.m in Sources */,

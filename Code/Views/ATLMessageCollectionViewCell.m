@@ -129,37 +129,51 @@ CGFloat const ATLAvatarImageTailPadding = 7.0f;
     }
 }
 
-+ (NSString *)getCamblyAttachmentText:(LYRMessage *)message
+- (void)configureBubbleViewForCamblyProprietaryContent {
+    NSString *text = [ATLMessageCollectionViewCell getTextFromCamblyProprietaryMessage:self.message];
+    [self.bubbleView updateWithAttributedText:[self attributedStringForText:text]];
+    [self.bubbleView updateWithAttachments:[ATLMessageCollectionViewCell getAttachments:self.message]];
+    // TODO(gar): we should try to report unrecognized message parts and prompt them to download the latest version of the app
+}
+
+
++ (NSString *)getTextFromCamblyProprietaryMessage:(LYRMessage *)message
 {
-    NSMutableArray *textBlocks = [[NSMutableArray alloc] init];
+    NSMutableArray *texts = [[NSMutableArray alloc] init];
     for (int i = 0; i < [message.parts count]; i++) {
         LYRMessagePart *messagePart = message.parts[i];
-        if ([messagePart.MIMEType isEqualToString:ATLMIMETypeTextPlain]) {
-            [textBlocks addObject:[[NSString alloc] initWithData:messagePart.data encoding:NSUTF8StringEncoding]];
-        } else if ([messagePart.MIMEType isEqualToString:ICMIMETypeJson]) {
+        if ([messagePart.MIMEType isEqualToString:ICMIMETypeJson]) {
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:messagePart.data options:NSJSONReadingMutableContainers error:nil];
+            NSInteger parts = [[json objectForKey:@"parts"] intValue];
+            i += parts - 1; // Chomp additional message parts
+        } else if ([messagePart.MIMEType isEqualToString:ATLMIMETypeTextPlain]) {
+            NSString *text = [[NSString alloc] initWithData:messagePart.data encoding:NSUTF8StringEncoding];
+            [texts addObject:text];
+        }
+    }
+    return [texts componentsJoinedByString:@"\n"];
+}
+
++ (NSDictionary *)getAttachments:(LYRMessage *)message
+{
+    NSMutableDictionary *attachments = [[NSMutableDictionary alloc] init];
+    for (int i = 0; i < [message.parts count]; i++) {
+        LYRMessagePart *messagePart = message.parts[i];
+        if ([messagePart.MIMEType isEqualToString:ICMIMETypeJson]) {
             NSDictionary *json = [NSJSONSerialization JSONObjectWithData:messagePart.data options:NSJSONReadingMutableContainers error:nil];
             NSString *type = [json objectForKey:@"type"];
             NSInteger parts = [[json objectForKey:@"parts"] intValue];
             if ([type isEqualToString:@"attachment"]) {
                 NSDictionary *metadata = [json objectForKey:@"metadata"];
                 NSString *filename = [metadata objectForKey:@"filename"];
-                [textBlocks addObject:filename];
-            } else {
-                [textBlocks addObject:@"Unparseable Message - Upgrade Cambly to view this message"];
+                [attachments setObject:message.parts[i+1] forKey:filename];
             }
             i += parts - 1; // Chomp additional message parts
-        } else {
-            [textBlocks addObject:@"Unparseable Message - Upgrade Cambly to view this message"];
         }
     }
-    return [textBlocks componentsJoinedByString:@"\n"];
+    return attachments;
 }
 
-- (void)configureBubbleViewForCamblyProprietaryContent {
-    NSString *text = [ATLMessageCollectionViewCell getCamblyAttachmentText:self.message];
-    [self.bubbleView updateWithAttributedText:[self attributedStringForText:text]];
-    [self.bubbleView updateProgressIndicatorWithProgress:0.0 visible:NO animated:NO];
-}
 
 - (void)configureBubbleViewForTextContent
 {
@@ -437,6 +451,11 @@ CGFloat const ATLAvatarImageTailPadding = 7.0f;
     }
 }
 
+- (void)updateWithAttachmentViewDelegate:(id<ATLAttachmentViewDelegate>)delegate
+{
+    _bubbleView.attachmentViewDelegate = delegate;
+}
+
 - (void)shouldDisplayAvatarItem:(BOOL)shouldDisplayAvatarItem
 {
     NSArray *constraints = [self.contentView constraints];
@@ -460,8 +479,7 @@ CGFloat const ATLAvatarImageTailPadding = 7.0f;
 
     CGFloat height = 0;
     if ([ATLMessageCollectionViewCell isCamblyProprietaryMessage:message]) {
-        NSString *text = [ATLMessageCollectionViewCell getCamblyAttachmentText:message];
-        height = [self cellHeightForText:text inView:view];
+        height = [self cellHeightForAttachment:message inView:view];
     } else if ([part.MIMEType isEqualToString:ATLMIMETypeTextPlain]) {
         height = [self cellHeightForTextMessage:message inView:view];
     } else if ([part.MIMEType isEqualToString:ATLMIMETypeImageJPEG] || [part.MIMEType isEqualToString:ATLMIMETypeImagePNG] || [part.MIMEType isEqualToString:ATLMIMETypeImageGIF]) {
@@ -474,14 +492,23 @@ CGFloat const ATLAvatarImageTailPadding = 7.0f;
     return height;
 }
 
++ (CGFloat)cellHeightForAttachment:(LYRMessage *)message inView:(id)view
+{
+    NSString *text = [ATLMessageCollectionViewCell getTextFromCamblyProprietaryMessage:message];
+    NSDictionary *attachments = [ATLMessageCollectionViewCell getAttachments:message];
+    
+    return ([self textHeight:text inView:view] + ATLMessageBubbleLabelVerticalPadding * 2)
+        + (([self textHeight:@" " inView:view] + ATLMessageBubbleAttachmentVerticalMargin) * [attachments count]);
+}
+
 + (CGFloat)cellHeightForTextMessage:(LYRMessage *)message inView:(id)view
 {
     LYRMessagePart *part = message.parts.firstObject;
     NSString *text = [[NSString alloc] initWithData:part.data encoding:NSUTF8StringEncoding];
-    return [self cellHeightForText:text inView:view];
+    return [self textHeight:text inView:view] + ATLMessageBubbleLabelVerticalPadding * 2;
 }
 
-+ (CGFloat)cellHeightForText:(NSString *)text inView:(id)view
++ (CGFloat)textHeight:(NSString *)text inView:(id)view
 {
     // Temporarily adding  the view to the hierarchy so that UIAppearance property values will be set based on containment.
     ATLMessageCollectionViewCell *cell = [self sharedCell];
@@ -492,8 +519,7 @@ CGFloat const ATLAvatarImageTailPadding = 7.0f;
     if (!font) {
         font = cell.messageTextFont;
     }
-    CGSize size = ATLTextPlainSize(text, font);
-    return size.height + ATLMessageBubbleLabelVerticalPadding * 2;
+    return ATLTextPlainSize(text, font).height;
 }
 
 + (CGFloat)cellHeightForImageMessage:(LYRMessage *)message

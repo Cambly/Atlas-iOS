@@ -22,10 +22,13 @@
 
 #import "ATLOutgoingMessageCollectionViewCell.h"
 #import "ATLIncomingMessageCollectionViewCell.h"
+#import "ATLAttachmentView.h"
 #import "ATLConversationCollectionViewMoreMessagesHeader.h"
 #import "ATLConversationCollectionViewHeader.h"
 #import "ATLConversationCollectionViewFooter.h"
 
 @interface ATLConversationCollectionView : UICollectionView
+
+@property (nonatomic) id<ATLAttachmentViewDelegate> attachmentViewDelegate;
 
 @end
