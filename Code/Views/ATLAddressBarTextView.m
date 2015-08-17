@@ -36,7 +36,7 @@ NSString *const ATLAddressBarDelimiterPart = @"delimiter";
 @implementation ATLAddressBarTextView
 
 NSString *const ATLAddressBarTextViewAccesssibilityLabel = @"Address Bar Text View";
-CGFloat const ATLAddressBarTextViewIndent = 34.0f;
+CGFloat const ATLAddressBarTextViewIndent = 0.0f;
 CGFloat const ATLAddressBarTextContainerInset = 10.0f;
 static CGFloat const ATLLineSpacing = 6;
 
@@ -75,15 +75,15 @@ static CGFloat const ATLLineSpacing = 6;
     self.typingAttributes = @{NSParagraphStyleAttributeName: paragraphStyle, NSForegroundColorAttributeName: self.addressBarTextColor};
     self.font = self.addressBarFont;
     
-    self.toLabel = [UILabel new];
-    self.toLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    self.toLabel.text = ATLLocalizedString(@"atl.addressbar.textview.tolabel.key", @"To:", nil);
-    self.toLabel.textColor = [UIColor grayColor];
-    self.toLabel.font = self.addressBarFont;
-    [self addSubview:self.toLabel];
+//    self.toLabel = [UILabel new];
+//    self.toLabel.translatesAutoresizingMaskIntoConstraints = NO;
+//    self.toLabel.text = ATLLocalizedString(@"atl.addressbar.textview.tolabel.key", @"To:", nil);
+//    self.toLabel.textColor = [UIColor grayColor];
+//    self.toLabel.font = self.addressBarFont;
+//    [self addSubview:self.toLabel];
     
     [self configureHeightConstraint];
-    [self configureToLabelConstraints];
+//    [self configureToLabelConstraints];
     [self setUpMaxHeight];
 }
 

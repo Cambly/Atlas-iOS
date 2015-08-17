@@ -73,12 +73,12 @@ static CGFloat const ATLButtonHeight = 28.0f;
         self.displaysRightAccessoryImage = YES;
         self.firstAppearance = YES;
         
-        self.leftAccessoryButton = [[UIButton alloc] init];
-        self.leftAccessoryButton.accessibilityLabel = ATLMessageInputToolbarCameraButton;
-        self.leftAccessoryButton.contentMode = UIViewContentModeScaleAspectFit;
-        [self.leftAccessoryButton setImage:self.leftAccessoryImage forState:UIControlStateNormal];
-        [self.leftAccessoryButton addTarget:self action:@selector(leftAccessoryButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:self.leftAccessoryButton];
+//        self.leftAccessoryButton = [[UIButton alloc] init];
+//        self.leftAccessoryButton.accessibilityLabel = ATLMessageInputToolbarCameraButton;
+//        self.leftAccessoryButton.contentMode = UIViewContentModeScaleAspectFit;
+//        [self.leftAccessoryButton setImage:self.leftAccessoryImage forState:UIControlStateNormal];
+//        [self.leftAccessoryButton addTarget:self action:@selector(leftAccessoryButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+//        [self addSubview:self.leftAccessoryButton];
         
         self.textInputView = [[ATLMessageComposeTextView alloc] init];
         self.textInputView.accessibilityLabel = ATLMessageInputToolbarTextInputView;

@@ -12,7 +12,7 @@
 extern CGFloat const ATLMessageBubbleAttachmentVerticalMargin;
 
 /**
- @abstract The `ATLMessageInputToolbarDelegate` notifies its receiver when buttons have been
+ @abstract The `ATLAttachmentViewDelegate` notifies its receiver when buttons have been
  tapped.
  */
 @protocol ATLAttachmentViewDelegate <NSObject>
