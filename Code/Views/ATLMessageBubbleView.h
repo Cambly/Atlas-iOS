@@ -56,7 +56,7 @@ extern NSString *const ATLUserDidTapPhoneNumberNotification;
 /**
  @abstract Tells the bubble view to display the text, and when clicked, download & open the attachment
  */
-- (void)updateWithAttachments:(NSDictionary *)attachments;
+- (void)updateWithAttachments:(NSDictionary *)attachments color:(ATLDownloadIconColor)color;
 
 /**
  @abstract Tells the bubble view to display a given image.

@@ -87,6 +87,7 @@
 		C31479D31B757CF300706BD0 /* ATLParticipantTableViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C31479431B75792700706BD0 /* ATLParticipantTableViewController.h */; };
 		C31479D41B757CF300706BD0 /* ATLTypingIndicatorViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C31479451B75792700706BD0 /* ATLTypingIndicatorViewController.h */; };
 		C31479D51B757CF300706BD0 /* Atlas.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C31479381B75791700706BD0 /* Atlas.h */; };
+		C338B8ED1B83BC790076D717 /* AtlasResource.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C338B8EA1B83B4E00076D717 /* AtlasResource.xcassets */; };
 		C3D07DC81B7C13D900468344 /* ATLAttachmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D07DC61B7C13D900468344 /* ATLAttachmentView.m */; };
 		C3D07DC91B7E9CAA00468344 /* ATLAttachmentView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C3D07DC51B7C13D900468344 /* ATLAttachmentView.h */; };
 		CE7BDC080170509511B89900 /* libPods-UnitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F7012754989ED85BE6A8D69E /* libPods-UnitTests.a */; };
@@ -332,6 +333,7 @@
 		C31479951B75794F00706BD0 /* ATLProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATLProgressView.m; path = Code/Views/ATLProgressView.m; sourceTree = "<group>"; };
 		C31479A91B757A3E00706BD0 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "/Users/garhiggins/cambly/Cambly-iOS/Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<absolute>"; };
 		C31479D61B757DA600706BD0 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "/Users/garhiggins/cambly/Cambly-iOS/Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<absolute>"; };
+		C338B8EA1B83B4E00076D717 /* AtlasResource.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AtlasResource.xcassets; sourceTree = "<group>"; };
 		C3A65C1A1B7176040023DAD3 /* libAtlas-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libAtlas-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3D07DC51B7C13D900468344 /* ATLAttachmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATLAttachmentView.h; path = Code/Views/ATLAttachmentView.h; sourceTree = "<group>"; };
 		C3D07DC61B7C13D900468344 /* ATLAttachmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATLAttachmentView.m; path = Code/Views/ATLAttachmentView.m; sourceTree = "<group>"; };
@@ -598,6 +600,7 @@
 		D0D778881A02E2B2000A5F51 = {
 			isa = PBXGroup;
 			children = (
+				C338B8EA1B83B4E00076D717 /* AtlasResource.xcassets */,
 				C31479371B7578F300706BD0 /* Atlas */,
 				255E3F6B1A8D9C7F00E8F59E /* Code */,
 				D676CF171A8C4344002D9D27 /* Examples */,
@@ -795,6 +798,7 @@
 				C3A65C171B7176040023DAD3 /* Frameworks */,
 				C3A65C181B7176040023DAD3 /* CopyFiles */,
 				7C4B271942FD7B8655E4D5FE /* Copy Pods Resources */,
+				C338B8EC1B83BC720076D717 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -958,6 +962,14 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		C338B8EC1B83BC720076D717 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C338B8ED1B83BC790076D717 /* AtlasResource.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D0294DD61A93F33900702856 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;

@@ -132,7 +132,8 @@ CGFloat const ATLAvatarImageTailPadding = 7.0f;
 - (void)configureBubbleViewForCamblyProprietaryContent {
     NSString *text = [ATLMessageCollectionViewCell getTextFromCamblyProprietaryMessage:self.message];
     [self.bubbleView updateWithAttributedText:[self attributedStringForText:text]];
-    [self.bubbleView updateWithAttachments:[ATLMessageCollectionViewCell getAttachments:self.message]];
+    [self.bubbleView updateWithAttachments:[ATLMessageCollectionViewCell getAttachments:self.message]
+                                     color:(self.messageTextColor == [UIColor whiteColor]) ? ATLDownloadIconColorWhite : ATLDownloadIconColorBlack];
     // TODO(gar): we should try to report unrecognized message parts and prompt them to download the latest version of the app
 }
 

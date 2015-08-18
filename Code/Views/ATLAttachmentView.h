@@ -24,11 +24,18 @@ extern CGFloat const ATLMessageBubbleAttachmentVerticalMargin;
 
 @end
 
+typedef NS_ENUM(NSUInteger, ATLDownloadIconColor) {
+    ATLDownloadIconColorBlack,
+    ATLDownloadIconColorWhite
+};
+
 /**
  @abstract The `ATLAttachmentView` is displayed inside of an ATLMessageBubbleView
  and when clicked, will download and open the attachment.
  */
 @interface ATLAttachmentView : UIView
+
+@property (nonatomic) ATLDownloadIconColor color;
 
 @property (nonatomic) id<ATLAttachmentViewDelegate> delegate;
 

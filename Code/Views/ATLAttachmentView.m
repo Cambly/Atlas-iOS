@@ -25,6 +25,7 @@ CGFloat const ATLMessageBubbleAttachmentVerticalMargin = 4.0f;
 @implementation ATLAttachmentView
 
 const float DOWNLOAD_ICON_SIZE = 16.0f;
+const float DOWNLOAD_ICON_PADDING = 8.0f;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -44,7 +45,7 @@ const float DOWNLOAD_ICON_SIZE = 16.0f;
         [self addSubview:_progressView];
         
         _downloadView = [[UIImageView alloc] init];
-        _downloadView.image = [UIImage imageNamed:@"AtlasResource.bundle/chevron"];
+        _downloadView.image = [UIImage imageNamed:@"download"];
         _downloadView.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:_downloadView];
         
@@ -59,11 +60,24 @@ const float DOWNLOAD_ICON_SIZE = 16.0f;
     return self;
 }
 
+- (void)setDownloadIconColor:(ATLDownloadIconColor)color
+{
+}
+
 - (void)updateWithAttachment:(LYRMessagePart *)attachment withName:(NSString *)filename
 {
     // TODO(gar): cleaner formatting?
     self.filename = filename;
-    self.attachmentLabel.text = filename;
+    
+    NSDictionary *attributes;
+    if (self.color == ATLDownloadIconColorBlack) {
+        self.downloadView.image = [UIImage imageNamed:@"download"];
+        attributes = @{NSForegroundColorAttributeName : [UIColor blackColor]};
+    } else {
+        self.downloadView.image = [UIImage imageNamed:@"download_white"];
+        attributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+    }
+    self.attachmentLabel.attributedText = [[NSMutableAttributedString alloc] initWithString:filename attributes:attributes];
     self.attachment = attachment;
 }
 
@@ -132,7 +146,7 @@ const float DOWNLOAD_ICON_SIZE = 16.0f;
 - (void)configureProgressViewConstraints
 {
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_progressView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:_progressView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:_attachmentLabel attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:_progressView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:_attachmentLabel attribute:NSLayoutAttributeLeft multiplier:1.0 constant:-DOWNLOAD_ICON_PADDING]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_progressView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_progressView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:DOWNLOAD_ICON_SIZE]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_progressView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:DOWNLOAD_ICON_SIZE]];
@@ -141,7 +155,7 @@ const float DOWNLOAD_ICON_SIZE = 16.0f;
 - (void)configureDownloadViewConstraints
 {
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_downloadView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:_downloadView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:_attachmentLabel attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:_downloadView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:_attachmentLabel attribute:NSLayoutAttributeLeft multiplier:1.0 constant:-DOWNLOAD_ICON_PADDING]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_downloadView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_downloadView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:DOWNLOAD_ICON_SIZE]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_downloadView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:DOWNLOAD_ICON_SIZE]];

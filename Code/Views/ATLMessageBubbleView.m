@@ -136,7 +136,7 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
     [self setBubbleViewContentType:ATLBubbleViewContentTypeText];
 }
 
-- (void)updateWithAttachments:(NSDictionary *)attachments
+- (void)updateWithAttachments:(NSDictionary *)attachments color:(ATLDownloadIconColor)color
 {
     for (UIView *attachmentView in self.attachmentViews) {
         [attachmentView removeFromSuperview];
@@ -144,6 +144,7 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
     [self.attachmentViews removeAllObjects];
     for (NSString *filename in attachments) {
         ATLAttachmentView *attachmentView = [[ATLAttachmentView alloc] init];
+        attachmentView.color = color;
         attachmentView.delegate = self.attachmentViewDelegate;
         attachmentView.translatesAutoresizingMaskIntoConstraints = NO;
         [attachmentView updateWithAttachment:[attachments objectForKey:filename] withName:filename];

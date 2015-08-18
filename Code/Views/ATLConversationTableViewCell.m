@@ -153,7 +153,7 @@ static CGFloat const ATLChevronIconViewRightPadding = 14.0f;
     
     _chevronIconView = [[UIImageView alloc] init];
     _chevronIconView.translatesAutoresizingMaskIntoConstraints = NO;
-    _chevronIconView.image = [UIImage imageNamed:@"AtlasResource.bundle/chevron"];
+    _chevronIconView.image = [UIImage imageNamed:@"chevron"];
     [self.contentView addSubview:_chevronIconView];
     
     [self configureConversationImageViewLayoutContraints];
