@@ -60,10 +60,6 @@ const float DOWNLOAD_ICON_PADDING = 8.0f;
     return self;
 }
 
-- (void)setDownloadIconColor:(ATLDownloadIconColor)color
-{
-}
-
 - (void)updateWithAttachment:(LYRMessagePart *)attachment withName:(NSString *)filename
 {
     // TODO(gar): cleaner formatting?
