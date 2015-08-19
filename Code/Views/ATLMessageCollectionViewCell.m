@@ -147,6 +147,11 @@ CGFloat const ATLAvatarImageTailPadding = 7.0f;
         if ([messagePart.MIMEType isEqualToString:ICMIMETypeJson]) {
             NSDictionary *json = [NSJSONSerialization JSONObjectWithData:messagePart.data options:NSJSONReadingMutableContainers error:nil];
             NSInteger parts = [[json objectForKey:@"parts"] intValue];
+            NSString *type = [json objectForKey:@"type"];
+            if (![type isEqualToString:@"attachment"]) {
+                // We can't parse/display part of this message, let's bail and ask the user to upgrade
+                return ATLLocalizedString(@"atl.conversation.messagepart.unknown", @"<Update Cambly to view this message>", nil);
+            }
             i += parts - 1; // Chomp additional message parts
         } else if ([messagePart.MIMEType isEqualToString:ATLMIMETypeTextPlain]) {
             NSString *text = [[NSString alloc] initWithData:messagePart.data encoding:NSUTF8StringEncoding];
@@ -163,8 +168,9 @@ CGFloat const ATLAvatarImageTailPadding = 7.0f;
         LYRMessagePart *messagePart = message.parts[i];
         if ([messagePart.MIMEType isEqualToString:ICMIMETypeJson]) {
             NSDictionary *json = [NSJSONSerialization JSONObjectWithData:messagePart.data options:NSJSONReadingMutableContainers error:nil];
-            NSString *type = [json objectForKey:@"type"];
             NSInteger parts = [[json objectForKey:@"parts"] intValue];
+            NSString *type = [json objectForKey:@"type"];
+            // NB: all types handled here should also be added to getTextFromCamblyProperietaryMessage
             if ([type isEqualToString:@"attachment"]) {
                 NSDictionary *metadata = [json objectForKey:@"metadata"];
                 NSString *filename = [metadata objectForKey:@"filename"];
