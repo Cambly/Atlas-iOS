@@ -20,7 +20,6 @@
 
 #import "ATLProgressView.h"
 
-static NSTimeInterval const ATLProgressViewDefaultBorderWidth = 8.00f;
 static NSTimeInterval const ATLProgressViewDefaultTimeInterval = 0.25f;
 
 float ATLDegreeToRadians(float degrees)
@@ -64,7 +63,6 @@ float ATLDegreeToRadians(float degrees)
 
 - (void)lyr_commonInit
 {
-    _borderWidth = ATLProgressViewDefaultBorderWidth;
     _animationDuration = ATLProgressViewDefaultTimeInterval;
     _backRingLayer = [CAShapeLayer layer];
     _progressRingLayer = [CAShapeLayer layer];
@@ -79,6 +77,7 @@ float ATLDegreeToRadians(float degrees)
 {
     [super layoutSubviews];
     CGRect bounds = self.bounds;
+    self.borderWidth = bounds.size.width / 8;
     UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds))
                                                         radius:self.radius / 2 - self.borderWidth / 2
                                                     startAngle:ATLDegreeToRadians(0 - 90)

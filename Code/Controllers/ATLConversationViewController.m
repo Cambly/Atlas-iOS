@@ -601,10 +601,16 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     UIDocumentInteractionController *interactionController =
         [UIDocumentInteractionController interactionControllerWithURL: fileUrl];
     interactionController.delegate = self;
-    // TODO(gar): maybe the attachment view should provide the rect?
-//    [interactionController presentOpenInMenuFromRect:self.view.frame inView:self.view animated:YES];
-    [interactionController presentPreviewAnimated:YES];
-    
+    if (![interactionController presentPreviewAnimated:YES]) {
+        // TODO(gar): probably could handle these a little better - download them?
+        NSLog([@"Unable to open attachment with " stringByAppendingString:filename]);
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:ATLLocalizedString(@"atl.conversation.attachment.ohno", @"Oh no!", nil)
+                                                        message:ATLLocalizedString(@"atl.conversation.attachment.cantopen", @"We couldn't open this attachment", nil)
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"dismiss", nil)
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 #pragma mark - UIDocumentInteractionControllerDelegate

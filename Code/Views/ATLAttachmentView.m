@@ -84,8 +84,9 @@ const float DOWNLOAD_ICON_PADDING = 8.0f;
         LYRProgress *progress = [self.attachment downloadContent:&error];
         if (!progress) {
             NSLog(@"failed to request for a content download from the UI with error=%@", error);
+        } else {
+            [progress setDelegate:self];
         }
-        // TODO(gar): different progress indicator
         [self updateProgressIndicatorWithProgress:progress animated:NO];
     } else if (self.attachment && (self.attachment.transferStatus == LYRContentTransferDownloading)) {
         // Set self for delegation, if single image message part message
