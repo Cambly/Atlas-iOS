@@ -131,11 +131,17 @@ CGFloat const ATLAvatarImageTailPadding = 7.0f;
 
 - (void)configureBubbleViewForCamblyProprietaryContent {
     NSString *text = [ATLMessageCollectionViewCell getTextFromCamblyProprietaryMessage:self.message];
-    [self.bubbleView updateWithAttributedText:[self attributedStringForText:text]];
-    // the color attribute could be handled better. But, meh.
-    [self.bubbleView updateWithAttachments:[ATLMessageCollectionViewCell getAttachments:self.message]
-                                     color:(self.messageTextColor == [UIColor whiteColor]) ? ATLDownloadIconColorWhite : ATLDownloadIconColorBlack];
-    // TODO(gar): we should try to report unrecognized message parts and prompt them to download the latest version of the app
+    if (![ATLMessageCollectionViewCell isParseable:self.message]) {
+        NSString *text = ATLLocalizedString(@"atl.conversation.messagepart.unknown", @"<Update Cambly to view this message>", nil);
+        NSAttributedString *attributedText = [self attributedStringForText:text];
+        [self.bubbleView updateWithAttributedText:attributedText];
+        self.bubbleView.backgroundColor = ATLWarningColor();
+    } else {
+        [self.bubbleView updateWithAttributedText:[self attributedStringForText:text]];
+        // the color attribute could be handled better. But, meh.
+        [self.bubbleView updateWithAttachments:[ATLMessageCollectionViewCell getAttachments:self.message]
+                                         color:(self.messageTextColor == [UIColor whiteColor]) ? ATLDownloadIconColorWhite : ATLDownloadIconColorBlack];
+    }
 }
 
 
@@ -147,11 +153,6 @@ CGFloat const ATLAvatarImageTailPadding = 7.0f;
         if ([messagePart.MIMEType isEqualToString:ICMIMETypeJson]) {
             NSDictionary *json = [NSJSONSerialization JSONObjectWithData:messagePart.data options:NSJSONReadingMutableContainers error:nil];
             NSInteger parts = [[json objectForKey:@"parts"] intValue];
-            NSString *type = [json objectForKey:@"type"];
-            if (![type isEqualToString:@"attachment"]) {
-                // We can't parse/display part of this message, let's bail and ask the user to upgrade
-                return ATLLocalizedString(@"atl.conversation.messagepart.unknown", @"<Update Cambly to view this message>", nil);
-            }
             i += parts - 1; // Chomp additional message parts
         } else if ([messagePart.MIMEType isEqualToString:ATLMIMETypeTextPlain]) {
             NSString *text = [[NSString alloc] initWithData:messagePart.data encoding:NSUTF8StringEncoding];
@@ -180,6 +181,24 @@ CGFloat const ATLAvatarImageTailPadding = 7.0f;
         }
     }
     return attachments;
+}
+
++ (bool) isParseable:(LYRMessage *)message
+{
+    for (int i = 0; i < [message.parts count]; i++) {
+        LYRMessagePart *messagePart = message.parts[i];
+        if ([messagePart.MIMEType isEqualToString:ICMIMETypeJson]) {
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:messagePart.data options:NSJSONReadingMutableContainers error:nil];
+            NSInteger parts = [[json objectForKey:@"parts"] intValue];
+            NSString *type = [json objectForKey:@"type"];
+            if ([type isEqualToString:@"attachment"]) {
+            } else {
+                return NO;
+            }
+            i += parts - 1; // Chomp additional message parts
+        }
+    }
+    return YES;
 }
 
 

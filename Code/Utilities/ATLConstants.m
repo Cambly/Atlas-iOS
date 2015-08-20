@@ -40,6 +40,11 @@ UIColor *ATLRedColor()
     return [UIColor colorWithRed:240.0f/255.0f green:80.0f/255.0f blue:100.0f/255.0f alpha:1.0];
 }
 
+UIColor *ATLWarningColor()
+{
+    return [UIColor colorWithRed:255.0/255.0 green:213.0/255.0 blue:79.0/255.0 alpha:1.0];
+}
+
 UIFont *ATLLightFont(CGFloat size)
 {
     return [UIFont fontWithName:@"HelveticaNeue-Light" size:size];

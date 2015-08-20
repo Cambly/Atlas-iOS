@@ -32,6 +32,8 @@ UIColor *ATLAddressBarGray();
 
 UIColor *ATLRedColor();
 
+UIColor *ATLWarningColor();
+
 UIFont *ATLLightFont(CGFloat size);
 
 UIFont *ATLMediumFont(CGFloat size);
