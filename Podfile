@@ -5,12 +5,12 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 target 'Programmatic' do
   pod 'Atlas', path: '.'
-  pod 'LayerKit'
+  pod 'LayerKit', '~> 0.15.0'
 end
 
 target 'Storyboard' do
   pod 'Atlas', path: '.'
-  pod 'LayerKit'
+  pod 'LayerKit', '~> 0.15.0'
 end
 
 target 'ProgrammaticTests' do
