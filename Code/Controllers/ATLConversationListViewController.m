@@ -342,11 +342,11 @@ NSString *const ATLConversationListViewControllerDeletionModeGlobal = @"Global";
                     break;
             }
         }
-        UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:actionString handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-            [self deleteConversationAtIndexPath:indexPath withDeletionMode:deletionMode.integerValue];
-        }];
-        deleteAction.backgroundColor = actionColor;
-        [actions addObject:deleteAction];
+//        UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:actionString handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+//            [self deleteConversationAtIndexPath:indexPath withDeletionMode:deletionMode.integerValue];
+//        }];
+//        deleteAction.backgroundColor = actionColor;
+//        [actions addObject:deleteAction];
     }
     return actions;
 }

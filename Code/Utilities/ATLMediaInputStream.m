@@ -467,11 +467,11 @@ static size_t ATLMediaInputStreamPutBytesIntoStreamCallback(void *assetStreamRef
     NSMutableDictionary *destinationOptions = self.metadata ? [self.metadata mutableCopy] : [NSMutableDictionary dictionary];
     if (self.maximumSize > 0) {
         // Resample image if requested.
-        if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1) {
-            // Unfortunately, this feature is only available on iOS8+. If we're
-            // on <= iOS7.1, image had to be resampled beforehand (see setupiOS7SpecificConsumerPrerequisite:).
-            [destinationOptions setObject:@(self.maximumSize) forKey:(NSString *)kCGImageDestinationImageMaxPixelSize];
-        }
+//        if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1) {
+//            // Unfortunately, this feature is only available on iOS8+. If we're
+//            // on <= iOS7.1, image had to be resampled beforehand (see setupiOS7SpecificConsumerPrerequisite:).
+//            [destinationOptions setObject:@(self.maximumSize) forKey:(NSString *)kCGImageDestinationImageMaxPixelSize];
+//        }
     }
     if (self.compressionQuality > 0) {
         // If image should only be compressed.
