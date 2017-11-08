@@ -186,9 +186,8 @@ static CGFloat const ATLMaxScrollDistanceFromBottom = 150;
     
     UIEdgeInsets contentInset = self.collectionView.contentInset;
     UIEdgeInsets scrollIndicatorInsets = self.collectionView.scrollIndicatorInsets;
-    CGRect frame = [self.view convertRect:self.addressBarController.addressBarView.frame fromView:self.addressBarController.addressBarView.superview];
-    
-    contentInset.top = CGRectGetMaxY(frame);
+    CGRect nonConvertedFrame = self.addressBarController.addressBarView.frame;
+    contentInset.top += nonConvertedFrame.size.height;
     scrollIndicatorInsets.top = contentInset.top;
     self.collectionView.contentInset = contentInset;
     self.collectionView.scrollIndicatorInsets = scrollIndicatorInsets;
