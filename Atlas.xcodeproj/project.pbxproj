@@ -1042,7 +1042,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Storyboard/Pods-Storyboard-resources.sh",
-				"$PODS_CONFIGURATION_BUILD_DIR/Atlas/AtlasResource.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/Atlas/AtlasResource.bundle,
 				"${PODS_ROOT}/LayerKit/LayerKit.embeddedframework/LayerKit.framework/Versions/A/Resources/layer-client-messaging-schema.bundle/20140628105322170_drop_and_clean_case_indent_dates_uniques.sql",
 				"${PODS_ROOT}/LayerKit/LayerKit.embeddedframework/LayerKit.framework/Versions/A/Resources/layer-client-messaging-schema.bundle/20140628114921198_remove_creator_id_from_tombstone_wipe_for_ordering.sql",
 				"${PODS_ROOT}/LayerKit/LayerKit.embeddedframework/LayerKit.framework/Versions/A/Resources/layer-client-messaging-schema.bundle/20140701095427050_add_trigger_for_messaging_receipts.sql",
@@ -1207,7 +1207,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Programmatic/Pods-Programmatic-resources.sh",
-				"$PODS_CONFIGURATION_BUILD_DIR/Atlas/AtlasResource.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/Atlas/AtlasResource.bundle,
 				"${PODS_ROOT}/LayerKit/LayerKit.embeddedframework/LayerKit.framework/Versions/A/Resources/layer-client-messaging-schema.bundle/20140628105322170_drop_and_clean_case_indent_dates_uniques.sql",
 				"${PODS_ROOT}/LayerKit/LayerKit.embeddedframework/LayerKit.framework/Versions/A/Resources/layer-client-messaging-schema.bundle/20140628114921198_remove_creator_id_from_tombstone_wipe_for_ordering.sql",
 				"${PODS_ROOT}/LayerKit/LayerKit.embeddedframework/LayerKit.framework/Versions/A/Resources/layer-client-messaging-schema.bundle/20140701095427050_add_trigger_for_messaging_receipts.sql",
